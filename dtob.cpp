@@ -1,6 +1,24 @@
+//
+// dtob.cpp
+//
+// given a command line argument
+//
+// C-string representing a numerical value
+// in decimal, write to stdout
+// the binary representation of that value.
+//
+// author: Christopher Sprague
+//
+///////////////////////////////////////////
 
 #include <iostream>
 
+//
+// power function
+// given an integer base and integer exponent,
+// return the value of (base)^(exponent)
+// note that 0^0 is defined here as 1.
+//
 int power ( int base, int exponent ) {
 	if ( base == 0 && exponent == 0 ) {
 		return 1; // definition here (redundant but w/e)
@@ -19,6 +37,17 @@ int power ( int base, int exponent ) {
 	return sum;
 }
 
+//
+// given an integer value_remaining (think remainder)
+// return the highest POWER to which 2 can be raised
+// that does not EXCEED the value of value_remaining.
+//
+// in other words, this function is used determine
+// where each '1' in the binary representation falls.
+//
+// if the 2^power = value_remaining, then this is the
+// last '1' we need in the binary representation.
+//
 int p2 ( int value_remaining ) {
 	if ( value_remaining == 0 ) {
 		return 0; // base case
@@ -33,6 +62,13 @@ int p2 ( int value_remaining ) {
 	return pow;
 }
 
+//
+// test function to ensure p2 function
+// is working as intended.
+//
+// format is -
+// {(pre-determined correct value)} {function result}
+//
 void test_p2 ( ) {
 	printf("(3) %d\n", p2(10));
 	printf("(4) %d\n", p2(16));
@@ -42,6 +78,11 @@ void test_p2 ( ) {
 	return;
 }
 
+//
+// main program function.
+// reads in args from calling via command line
+// 	Usage: d2b {int}
+//
 int main ( int argc, char* argv[] ) {
 	if ( argc != 2 ) {
 		fprintf(stderr, "Usage: d2b {int}\n");
