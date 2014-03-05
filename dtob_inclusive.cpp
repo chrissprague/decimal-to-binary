@@ -32,7 +32,6 @@ int power ( int base, int exponent ) {
 	if ( exponent == 1 ) {
 		return base;
 	}
-	int pow = 1;
 	int sum = base;
 	for ( int i = 1 ; i < exponent ; i++ ) {
 		sum = sum * base;

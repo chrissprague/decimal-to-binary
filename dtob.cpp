@@ -29,7 +29,6 @@ int power ( int base, int exponent ) {
 	if ( exponent == 1 ) {
 		return base;
 	}
-	int pow = 1;
 	int sum = base;
 	for ( int i = 1 ; i < exponent ; i++ ) {
 		sum = sum * base;
@@ -95,6 +94,7 @@ int main ( int argc, char* argv[] ) {
 	}
 	num = atoi(argv[1]);
 	if (!( num )) {
+		fprintf(stderr, "your input was: %s\n", argv[1]);
 		fprintf(stderr, "Usage: d2b {int}\n");
 		exit(EXIT_FAILURE);
 	}
