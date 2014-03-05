@@ -2,7 +2,6 @@
 // dtob.cpp
 //
 // given a command line argument
-//
 // C-string representing a numerical value
 // in decimal, write to stdout
 // the binary representation of that value.
