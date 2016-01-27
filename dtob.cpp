@@ -90,12 +90,78 @@ static int test_p2() {
 }
 
 static int print_usage() {
-    fprintf(stderr, "Usage: d2b [int-in-decimal]\n");
+    fprintf(stderr, "Usage:\n\td2b [int-in-decimal]\n\td2b $(date)\n");
     return 0;
 }
 
 int main(int argc, char *argv[]) {
-	if (argc != 2) {
+    // Date format, e.g. $(date)
+    // Note: I don't convert the year because it's too big
+	if ( argc == 7 ) {
+		for (int i = 1; i < 7; i++) {
+			if (i == 3) { // day of month
+				int num = atoi(argv[i]);
+				int size = p2(num) + 1;
+				int bin[size];
+				for (int i = 0; i < size; i ++) {
+					bin[i] = 0 ; // set default to 0, put in 1's later
+				}
+				int R = num - power(2, p2(num)); // R = value remaining
+				bin[p2(num)] = 1;
+				while (R != 0) {
+					int nhp = p2(R); // next highest power
+					bin[nhp] = 1;
+					R = R - power(2, p2(R));
+				}
+				// print out the array backwards
+				for (int i = (size - 1); i >= 0; i--) {
+					printf("%d", bin[i]);
+				}
+				printf(" ");
+			}
+			else if (i == 4) { // hour:minute:second
+				// step 1: split/token string
+				char *hour = (char *)malloc(sizeof(char) * 2); // 2 characters
+				char *minute = (char *)malloc(sizeof(char) * 2); // 2 characters
+				char *second = (char *)malloc(sizeof(char) * 2); // 2 characters
+				hour = strtok(argv[i], ":");
+				minute = strtok(NULL, ":");
+				second = strtok(NULL, ":");
+				char *args[3] = {hour, minute, second};
+				for (int z = 0; z < 3; z++) {
+					int num = atoi(args[z]);
+					int size = p2(num) + 1;
+					int bin[size];
+					for (int i = 0 ; i < size; i++) {
+						bin[i] = 0 ; // set default to 0, put in 1's later
+					}
+					int R = num - power(2, p2(num)); // R = value remaining
+					bin[p2(num)] = 1;
+					while (R != 0) {
+						int nhp = p2(R); // next highest power
+						bin[nhp] = 1;
+						R = R - power(2, p2(R));
+					}
+					// print out the array backwards
+					for (int i = (size - 1); i >= 0; i--) {
+						printf("%d", bin[i]);
+					}
+					if (z != 2 ) {
+                        printf(":");
+                    } else {
+                        printf(" ");
+                    }
+				}
+			}
+			else { 
+				printf("%s ", argv[i]);
+			}
+		}
+		printf("\n");
+        return EXIT_SUCCESS;
+			
+	}
+    else if (argc != 2) {
         print_usage();
 		return EXIT_FAILURE;
 	}
@@ -110,8 +176,6 @@ int main(int argc, char *argv[]) {
         print_usage();
 		return EXIT_FAILURE;
 	}
-	
-	test_p2();
 	
 	int size = p2(num) + 1;
 	int bin[size];
@@ -134,8 +198,3 @@ int main(int argc, char *argv[]) {
 
 	return EXIT_SUCCESS;
 }
-
-
-
-
-
