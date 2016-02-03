@@ -20,20 +20,20 @@
 // note that 0^0 is defined here as 1.
 //
 int power(int base, int exponent) {
-	if (base == 0 && exponent == 0) {
-		return 1; // definition here (redundant but w/e)
-	}
-	if (exponent == 0) {
-		return 1;
-	}
-	if (exponent == 1) {
-		return base;
-	}
-	int sum = base;
-	for (int i = 1 ; i < exponent; i++) {
-		sum = sum * base;
-	}
-	return sum;
+    if (base == 0 && exponent == 0) {
+        return 1; // definition here (redundant but w/e)
+    }
+    if (exponent == 0) {
+        return 1;
+    }
+    if (exponent == 1) {
+        return base;
+    }
+    int sum = base;
+    for (int i = 1 ; i < exponent; i++) {
+        sum = sum * base;
+    }
+    return sum;
 }
 
 //
@@ -48,17 +48,17 @@ int power(int base, int exponent) {
 // last '1' we need in the binary representation.
 //
 int p2(int value_remaining) {
-	if (value_remaining == 0) {
-		return 0; // base case
-	}
-	int pow = 0;
-	for (int i = 0; power(2, i) < value_remaining; i++) {
-		pow++;
-	}
-	if (power(2, pow) > value_remaining) {
-		return (pow - 1);
-	}
-	return pow;
+    if (value_remaining == 0) {
+        return 0; // base case
+    }
+    int pow = 0;
+    for (int i = 0; power(2, i) < value_remaining; i++) {
+        pow++;
+    }
+    if (power(2, pow) > value_remaining) {
+        return (pow - 1);
+    }
+    return pow;
 }
 
 static int test_p2_helper(int expected, int actual) {
@@ -86,7 +86,7 @@ static int test_p2() {
     if (test_p2_helper(5, p2(33)) || status)
         status = 1;
 
-	return status;
+    return status;
 }
 
 static int print_usage() {
@@ -97,104 +97,104 @@ static int print_usage() {
 int main(int argc, char *argv[]) {
     // Date format, e.g. $(date)
     // Note: I don't convert the year because it's too big
-	if ( argc == 7 ) {
-		for (int i = 1; i < 7; i++) {
-			if (i == 3) { // day of month
-				int num = atoi(argv[i]);
-				int size = p2(num) + 1;
-				int bin[size];
-				for (int i = 0; i < size; i ++) {
-					bin[i] = 0 ; // set default to 0, put in 1's later
-				}
-				int R = num - power(2, p2(num)); // R = value remaining
-				bin[p2(num)] = 1;
-				while (R != 0) {
-					int nhp = p2(R); // next highest power
-					bin[nhp] = 1;
-					R = R - power(2, p2(R));
-				}
-				// print out the array backwards
-				for (int i = (size - 1); i >= 0; i--) {
-					printf("%d", bin[i]);
-				}
-				printf(" ");
-			}
-			else if (i == 4) { // hour:minute:second
-				// step 1: split/token string
-				char *hour = (char *)malloc(sizeof(char) * 2); // 2 characters
-				char *minute = (char *)malloc(sizeof(char) * 2); // 2 characters
-				char *second = (char *)malloc(sizeof(char) * 2); // 2 characters
-				hour = strtok(argv[i], ":");
-				minute = strtok(NULL, ":");
-				second = strtok(NULL, ":");
-				char *args[3] = {hour, minute, second};
-				for (int z = 0; z < 3; z++) {
-					int num = atoi(args[z]);
-					int size = p2(num) + 1;
-					int bin[size];
-					for (int i = 0 ; i < size; i++) {
-						bin[i] = 0 ; // set default to 0, put in 1's later
-					}
-					int R = num - power(2, p2(num)); // R = value remaining
-					bin[p2(num)] = 1;
-					while (R != 0) {
-						int nhp = p2(R); // next highest power
-						bin[nhp] = 1;
-						R = R - power(2, p2(R));
-					}
-					// print out the array backwards
-					for (int i = (size - 1); i >= 0; i--) {
-						printf("%d", bin[i]);
-					}
-					if (z != 2 ) {
+    if ( argc == 7 ) {
+        for (int i = 1; i < 7; i++) {
+            if (i == 3) { // day of month
+                int num = atoi(argv[i]);
+                int size = p2(num) + 1;
+                int bin[size];
+                for (int i = 0; i < size; i ++) {
+                    bin[i] = 0 ; // set default to 0, put in 1's later
+                }
+                int R = num - power(2, p2(num)); // R = value remaining
+                bin[p2(num)] = 1;
+                while (R != 0) {
+                    int nhp = p2(R); // next highest power
+                    bin[nhp] = 1;
+                    R = R - power(2, p2(R));
+                }
+                // print out the array backwards
+                for (int i = (size - 1); i >= 0; i--) {
+                    printf("%d", bin[i]);
+                }
+                printf(" ");
+            }
+            else if (i == 4) { // hour:minute:second
+                // step 1: split/token string
+                char *hour = (char *)malloc(sizeof(char) * 2); // 2 characters
+                char *minute = (char *)malloc(sizeof(char) * 2); // 2 characters
+                char *second = (char *)malloc(sizeof(char) * 2); // 2 characters
+                hour = strtok(argv[i], ":");
+                minute = strtok(NULL, ":");
+                second = strtok(NULL, ":");
+                char *args[3] = {hour, minute, second};
+                for (int z = 0; z < 3; z++) {
+                    int num = atoi(args[z]);
+                    int size = p2(num) + 1;
+                    int bin[size];
+                    for (int i = 0 ; i < size; i++) {
+                        bin[i] = 0 ; // set default to 0, put in 1's later
+                    }
+                    int R = num - power(2, p2(num)); // R = value remaining
+                    bin[p2(num)] = 1;
+                    while (R != 0) {
+                        int nhp = p2(R); // next highest power
+                        bin[nhp] = 1;
+                        R = R - power(2, p2(R));
+                    }
+                    // print out the array backwards
+                    for (int i = (size - 1); i >= 0; i--) {
+                        printf("%d", bin[i]);
+                    }
+                    if (z != 2 ) {
                         printf(":");
                     } else {
                         printf(" ");
                     }
-				}
-			}
-			else { 
-				printf("%s ", argv[i]);
-			}
-		}
-		printf("\n");
+                }
+            }
+            else { 
+                printf("%s ", argv[i]);
+            }
+        }
+        printf("\n");
         return EXIT_SUCCESS;
-			
-	}
+            
+    }
     else if (argc != 2) {
         print_usage();
-		return EXIT_FAILURE;
-	}
-	int num;
-	if (*(argv[1]) == '0') {
-		printf("0\n");
-		return EXIT_SUCCESS;
-	}
-	num = atoi(argv[1]);
-	if (!num) {
+        return EXIT_FAILURE;
+    }
+    int num;
+    if (*(argv[1]) == '0') {
+        printf("0\n");
+        return EXIT_SUCCESS;
+    }
+    num = atoi(argv[1]);
+    if (!num) {
         fprintf(stderr, "atoi failed to parse input as a valid int (your input was: \"%s\")\n", argv[1]);
         print_usage();
-		return EXIT_FAILURE;
-	}
-	
-	int size = p2(num) + 1;
-	int bin[size];
-	for (int i = 0; i < size; i++) {
-		bin[i] = 0 ; // set default to 0, put in 1's later
-	}
-	int R = num - power(2, p2(num)); // R = value remaining
-	bin[p2(num)] = 1;
-	while (R != 0) {
-		int nhp = p2(R); // next highest power
-		bin[nhp] = 1;
-		R = R - power(2, p2(R));
-	}
+        return EXIT_FAILURE;
+    }
+    
+    int size = p2(num) + 1;
+    int bin[size];
+    for (int i = 0; i < size; i++) {
+        bin[i] = 0 ; // set default to 0, put in 1's later
+    }
+    int R = num - power(2, p2(num)); // R = value remaining
+    bin[p2(num)] = 1;
+    while (R != 0) {
+        int nhp = p2(R); // next highest power
+        bin[nhp] = 1;
+        R = R - power(2, p2(R));
+    }
 
-	// print out the array backwards
-	for (int i = (size - 1); i >= 0; i--) {
-		printf("%d", bin[i]);
-	}
-	printf("\n");
+    // print out the array backwards
+    for (int i = (size - 1); i >= 0; i--) {
+        printf("%d", bin[i]);
+    }
+    printf("\n");
 
-	return EXIT_SUCCESS;
+    return EXIT_SUCCESS;
 }
